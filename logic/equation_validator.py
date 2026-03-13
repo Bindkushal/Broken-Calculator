@@ -173,7 +173,7 @@ class EquationValidator:
 
         return operands_counter, operators_counter, structure_sig
 
-    def validate(self, equation, target):
+    def validate(self, equation, target, broken_buttons=None):
         """
         Validate if an equation equals the target value. Secure and robust.
         (This implementation is already solid and remains unchanged).
@@ -183,6 +183,18 @@ class EquationValidator:
         if not equation:
             result["error"] = "Equation is empty"
             return result
+
+        # Fix 1: reject bare numbers — must have at least one operator
+        if not re.search(r'[+\-*/]', equation):
+            result["error"] = "Equation must use at least one operator (+, -, *, /)"
+            return result
+
+        # Fix 2: reject if broken button digit is used
+        if broken_buttons:
+            for btn in broken_buttons:
+                if str(btn) in equation:
+                    result["error"] = f"Button '{btn}' is broken — you can't use it"
+                    return result
         if re.search(r"[^0-9+\-*/().\s]", equation):
             result["error"] = "Invalid characters in equation"
             return result
