@@ -70,7 +70,9 @@ class GameManager:
         equation_for_eval = self.current_equation.replace("×", "*").replace("÷", "/")
 
         # Validate equation
-        result = self.equation_validator.validate(equation_for_eval, self.target_number)
+        result = self.equation_validator.validate(
+    equation_for_eval, self.target_number, self.broken_buttons
+)
 
         if result["valid"]:
             # Check if equation is unique
