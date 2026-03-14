@@ -71,8 +71,8 @@ class GameManager:
 
         # Validate equation
         result = self.equation_validator.validate(
-    equation_for_eval, self.target_number, self.broken_buttons
-)
+            equation_for_eval, self.target_number, self.broken_buttons
+        )
 
         if result["valid"]:
             # Check if equation is unique
